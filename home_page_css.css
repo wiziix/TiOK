@@ -1,0 +1,16 @@
+body{
+    background: #a5dbf2;
+    color: #090429;
+    font-family: Berlin Sans FB Demi, sans-serif;
+    text-align: center;
+}
+
+h1{
+    font-size: 50px;
+}
+
+a{
+    line-height: 100px;
+    color: #2e2c38;
+    font-size: 40px;
+}
