@@ -1,0 +1,18 @@
+body{
+    background: #a5dbf2;
+    color: #090429;
+    font-family: Berlin Sans FB Demi, sans-serif;
+}
+
+h1{
+    font-size: 50px;
+
+}
+
+table{
+    margin-right: auto;
+}
+
+th{
+    font-size: 30px;
+}
