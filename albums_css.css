@@ -31,21 +31,16 @@ h1{
 }
 
 table{
-    border: 5px solid #f0f0f0;
+    border-left: 5px solid #f0f0f0;
+    border-right: 5px solid #f0f0f0;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1%;
     padding: 2% 5%;
     text-align: left;
     width:50%;
     height: 20%;
 }
 
-th{
-    border-bottom: 5px dashed #f0f0f0;
-}
-
 td{
-    border-bottom: 5px dashed #f0f0f0;
     padding: 2%;
 }
