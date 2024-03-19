@@ -27,8 +27,24 @@ def hello_world():
     return render_template('home_page.html')
 @app.route("/albums", methods=['GET'])
 def Albums():
-    response = requests.get("https://jsonplaceholder.typicode.com/albums/1")
+
+
+    response = requests.get("https://jsonplaceholder.typicode.com/albums/")
     y = json.loads(response.content)
 
-    return render_template('albums.html', username = usernames[int(y['userId'])],
-                           title = y['title'])
+    #photos = requests.get("https://jsonplaceholder.typicode.com/photos")
+
+    #photo = json.loads(photos.content)
+
+    #img = None
+
+    #for i in range(len(photo)):
+        #if photo[i]['albumId'] == y['id']:
+            #img = photo[i]['thumbnailUrl']
+            #break
+
+
+    return render_template('albums.html', albums = y)#,
+                           #username = #usernames[int(y['userId'])],
+                           #title = y['title'], image = None, albums = y)
+                          # image = img)

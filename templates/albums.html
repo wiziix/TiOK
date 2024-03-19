@@ -8,15 +8,16 @@
 <body>
 <h1>API JSON</h1>
 
+{% for i in albums %}
 <table>
     <tbody>
     <tr>
         <th>username</th>
-        <td>{{username}}</td>
+        <td>{{i['userId']}}</td>
     </tr>
     <tr>
         <th>title</th>
-        <td>{{title}}</td>
+        <td>{{i['title']}}</td>
     </tr>
     <tr>
         <th>cover</th>
@@ -24,40 +25,7 @@
     </tr>
     </tbody>
 </table>
-
-<table>
-    <tbody>
-    <tr>
-        <th>username</th>
-        <td>Bret</td>
-    </tr>
-    <tr>
-        <th>title</th>
-        <td>quibusdam autem aliquid et et quia</td>
-    </tr>
-    <tr>
-        <th>cover</th>
-        <td><img src="https://via.placeholder.com/150/afc5c2"></td>
-    </tr>
-    </tbody>
-</table>
-
-<table>
-    <tbody>
-    <tr>
-        <th>username</th>
-        <td>Bret</td>
-    </tr>
-    <tr>
-        <th>title</th>
-        <td>quidem molestiae enim</td>
-    </tr>
-    <tr>
-        <th>cover</th>
-        <td><img src="https://via.placeholder.com/150/92c952"></td>
-    </tr>
-    </tbody>
-</table>
+{%endfor %}
 
 </body>
 </html>
