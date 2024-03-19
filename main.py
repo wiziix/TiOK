@@ -7,6 +7,9 @@ print(response)
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET'])
+@app.route("/")
 def hello_world():
     return render_template('home_page.html')
+@app.route("/albums")
+def Albums():
+    return render_template('albums.html')
