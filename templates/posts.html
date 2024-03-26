@@ -10,8 +10,11 @@
 {% set comments = comment -%}
 <h1>API JSON</h1>
 
-<h2>Podaj liczbę znaków</h2>
-<input type='number' min='1'>
+<h2>Filtrowanie postów po liczbie znaków</h2>
+
+<input type='number' min='1' max='200'>   <!-- dolna granica zakresu -->
+<input type='number' min='1' max='200'>   <!-- górna granica zakresu -->
+
 {% for post in posts %}
 <table>
   <tbody>
@@ -28,10 +31,14 @@
     <td>{{post['body']}}</td>
   </tr>
 
+  <tr class="comment">
+    <th>comments</th>
+  </tr>
+
   {% for i in range(post['id'] - 1, post['id'] + 4) %}
   <tr>
     <th>comment_title</th>
-    <td>{{comment[i]['body']}}</td>
+    <td class="comments">{{comment[i]['body']}}</td>
   </tr>
      {% endfor %}
 

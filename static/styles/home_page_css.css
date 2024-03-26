@@ -66,8 +66,8 @@ table{
     text-align: left;
     width:50%;
     height: 20%;
+    border-collapse: collapse;
 }
-
 
 th{
     width:20%;
@@ -100,12 +100,19 @@ h2{
 }
 
 input[type=number]{
-    margin-top: 1%;
-    margin-bottom: 2%;
-    width: 20em;
+    margin: 1% 0.5% 2% 0.5%;
+    width: 15em;
     height: 2.5em;
     padding: 1%;
     border: 2px solid #e0e0e0;
     font-family: Century Gothic, sans-serif;
     font-size: 100%;
+}
+
+.comments{
+    font-size: 90%;
+}
+
+.comment{
+    border: 3px dashed #f0f0f0;
 }
