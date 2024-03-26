@@ -94,3 +94,18 @@ td{
 .posts{
     width: 70%;
 }
+
+h2{
+    font-size: 120%;
+}
+
+input[type=number]{
+    margin-top: 1%;
+    margin-bottom: 2%;
+    width: 20em;
+    height: 2.5em;
+    padding: 1%;
+    border: 2px solid #e0e0e0;
+    font-family: Century Gothic, sans-serif;
+    font-size: 100%;
+}
