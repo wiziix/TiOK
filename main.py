@@ -16,6 +16,7 @@ thumbnails = {}
 for i in range(0,len(photos), 50):
     thumbnails[photos[i]['albumId']] = photos[i]['thumbnailUrl']
 
+
 #usernames dictionary
 #where keys are userIDs
 #values are usernames
@@ -43,3 +44,19 @@ def Albums():
                            username = usernames,
                            cover = thumbnails)
 
+@app.route("/posts")
+def Posts():
+    response = requests.get("https://jsonplaceholder.typicode.com/posts")
+    posts_content = json.loads(response.content)
+
+    response = requests.get("https://jsonplaceholder.typicode.com/comments")
+    comments_content = json.loads(response.content)
+
+    comments = {}
+
+
+
+
+    return render_template('posts.html',
+                           posts = posts_content,
+                           username = usernames)

@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="./home_page_css.css" rel="stylesheet">
   <meta charset="UTF-8">
   <title>Posts</title>
+  <link href="{{ url_for('static', filename='styles/home_page_css.css') }}" rel="stylesheet">
 </head>
 <body>
+{% set users = username -%}
 <h1>API JSON</h1>
 
+{% for post in posts %}
 <table>
   <tbody>
   <tr>
     <th>username</th>
-    <td>Elwyn.Skiles</td>
+    <td>{{users[post['userId']]}}</td>
   </tr>
   <tr>
     <th>title</th>
-    <td>tenetur quos ea unde est enim corrupti qui</td>
+    <td>{{post['title']}}</td>
   </tr>
   <tr>
-    <td>post_body</td>
+    <td>{{post['body']}}</td>
   </tr>
-
-  <!-- COMMENTS -->
-
   <tr>
-    <th>comment_title</th>
+    <th>comment_ title</th>
     <td>comment_body</td>
   </tr>
   </tbody>
 </table>
+{% endfor %}
 
 </body>
 </html>
