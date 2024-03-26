@@ -24,12 +24,14 @@
   <tr>
     <td>{{post['body']}}</td>
   </tr>
+
+  {% for i in range(post['id'] - 1, post['id'] + 4) %}
   <tr>
     <th>comment_title</th>
-    {% for comment in comments %}
-    <td>{{comment}}</td>
-    {% endfor %}
+    <td>{{comment[i]['body']}}</td>
   </tr>
+     {% endfor %}
+
   </tbody>
 </table>
 {% endfor %}

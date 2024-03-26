@@ -53,14 +53,8 @@ def Posts():
     response = requests.get("https://jsonplaceholder.typicode.com/comments")
     comments_content = json.loads(response.content)
 
-    comments = {}
-
-    for i in range(0, len(comments_content), 4):
-        comments[comments_content[i]['postId']] = comments_content[i]['id']
-
-    print(comments)
-
 
     return render_template('posts.html',
                            posts = posts_content,
-                           username = usernames)
+                           username = usernames,
+                           comment = comments_content)
