@@ -65,6 +65,10 @@ table{
     height: 20%;
 }
 
+th{
+    width: 20%
+}
+
 td{
     padding: 2%;
 }
