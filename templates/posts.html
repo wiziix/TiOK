@@ -10,6 +10,8 @@
 {% set comments = comment -%}
 <h1>API JSON</h1>
 
+<h2>Podaj liczbę znaków</h2>
+<input type='number' min='1'>
 {% for post in posts %}
 <table>
   <tbody>
@@ -22,6 +24,7 @@
     <td>{{post['title']}}</td>
   </tr>
   <tr>
+    <th></th>
     <td>{{post['body']}}</td>
   </tr>
 
