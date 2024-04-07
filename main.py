@@ -8,6 +8,8 @@ user = json.loads(users.content)
 res = requests.get("https://jsonplaceholder.typicode.com/photos/")
 photos = json.loads(res.content)
 
+
+
 #album thumbnails dictionary
 #where keys are albumIDs
 #and values are thumbnail URLs
@@ -63,8 +65,13 @@ def photos(username):
     response = requests.get("https://jsonplaceholder.typicode.com/photos")
     photos_content = json.loads(response.content)
 
-
-
     return render_template('photos.html',
+                           photo = photos_content,
                            user = username,
+                           index = find_key(usernames, username),
                            )
+
+def find_key(input_dict, value):
+    for key, val in input_dict.items():
+        if val == value: return key
+    return "None"
