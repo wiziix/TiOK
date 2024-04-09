@@ -5,6 +5,7 @@ import json
 def getUserData():
     return requests.get("https://jsonplaceholder.typicode.com/users")
 
+
 def getUsernames(user_data):
     users = json.loads(user_data.content)
     usernames = {}
