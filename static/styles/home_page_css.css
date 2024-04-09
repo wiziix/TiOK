@@ -76,6 +76,10 @@ td{
     padding: 3%;
 }
 
+.comment{
+    border: 3px dashed #f0f0f0;
+}
+
 .home_page{
     margin-top: 5%;
 }

@@ -10,8 +10,13 @@
 {% set comments = comment -%}
 <h1><a href = "{{url_for ('hello_world')}}" class="home_link">API JSON</a></h1>
 
-<h2>Podaj liczbę znaków</h2>
-<input type='number' min='1' id="searchInput">
+<h2>Filtrowanie postów po liczbie znaków</h2>
+
+<input type='number' min='1' max='200' id="searchInputStart" placeholder="Od">   <!-- dolna granica zakresu -->
+
+<input type='number' min='1' max='200' id="searchInputFinish" placeholder="Do">   <!-- górna granica zakresu -->
+
+
 {% for post in posts %}
 <table id = "table">
   <tbody>
@@ -26,6 +31,10 @@
   <tr>
     <th></th>
     <td class = "post_body">{{post['body']}}</td>
+  </tr>
+
+  <tr class="comment">
+    <th>comments</th>
   </tr>
 
   {% for i in range(post['id'] - 1, post['id'] + 4) %}
