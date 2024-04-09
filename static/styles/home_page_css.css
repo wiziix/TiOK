@@ -76,6 +76,10 @@ td{
     padding: 3%;
 }
 
+.comments{
+    font-size: 90%;
+}
+
 .comment{
     border: 3px dashed #f0f0f0;
 }
