@@ -16,6 +16,7 @@ body{
     border-left: 10px dashed #f7cb7e;
     width: 30%;
     min-width: 80%;
+    padding: 2%;
 }
 
 h1{
@@ -29,11 +30,6 @@ h1{
     margin-bottom: 4%;
 }
 
-.container-all{
-  width: fit-content;
-  margin: 20px auto;
-  height: auto;
-}
 .container{
   overflow:hidden;
   height: fit-content;
@@ -85,11 +81,10 @@ img{
     background-color: rgba(0,0,0,0.9);
   }
 .image_content {
-    margin: auto;
+    margin: 5% auto 0 auto;
     display: block;
-    min-width: 600px
+    min-width: 600px;
     max-width: 600px;
-    max-width: 80%;
     max-height: 80%;
   }
 .close {
@@ -101,3 +96,19 @@ img{
     color: white;
     cursor: pointer;
   }
+
+.home_link{
+    line-height: 0;
+    background-color: #f7cb7e;
+    color: #090429;
+    font-size: 100%;
+    border: 0;
+    padding: 0;
+}
+
+a:hover
+{
+    background-color: #f7cb7e;
+    border: 10px dashed #FFFFFF;
+    padding: 3%;
+}

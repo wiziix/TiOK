@@ -8,8 +8,9 @@
 </head>
 {% set ID = index -%}
 {% set photos = photo %}
-<h1> API JSON </h1>
+
 <body>
+<h1><a href = "{{url_for ('hello_world')}}" class="home_link">API JSON</a></h1>
     <div class="">
 		{% for i in range( (index - 1) * 50 , index * 50 ) %}
             <div class="container">

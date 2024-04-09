@@ -73,7 +73,7 @@ th{
     width:20%;
 }
 td{
-    padding: 2%;
+    padding: 3%;
 }
 
 .home_page{
@@ -108,4 +108,13 @@ input[type=number]{
     border: 2px solid #e0e0e0;
     font-family: Century Gothic, sans-serif;
     font-size: 100%;
+}
+
+.home_link{
+    line-height: 0;
+    background-color: #f7cb7e;
+    color: #090429;
+    font-size: 100%;
+    border: 0;
+    padding: 0;
 }
