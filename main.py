@@ -58,3 +58,13 @@ def Posts():
                            posts = posts_content,
                            username = usernames,
                            comment = comments_content)
+@app.route("/albums/photos/<username>")
+def photos(username):
+    response = requests.get("https://jsonplaceholder.typicode.com/photos")
+    photos_content = json.loads(response.content)
+
+
+
+    return render_template('photos.html',
+                           user = username,
+                           )
