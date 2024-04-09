@@ -2,8 +2,19 @@ import requests
 from flask import Flask, render_template, request
 import json
 
-users = requests.get("https://jsonplaceholder.typicode.com/users")
-user = json.loads(users.content)
+def getUserData():
+    return requests.get("https://jsonplaceholder.typicode.com/users")
+
+def getUsernames(user_data):
+    users = json.loads(user_data.content)
+    usernames = {}
+
+    #filling the usernames dict
+    for i in range(10):
+        usernames[users[i]['id']] = users[i]['username']
+
+    return usernames
+
 
 res = requests.get("https://jsonplaceholder.typicode.com/photos/")
 photos = json.loads(res.content)
@@ -22,11 +33,12 @@ for i in range(0,len(photos), 50):
 #usernames dictionary
 #where keys are userIDs
 #values are usernames
-usernames = {}
+
+#usernames = {}
 
 #filling the usernames dict
-for i in range(10):
-    usernames[user[i]['id']] = user[i]['username']
+#for i in range(10):
+    #usernames[user[i]['id']] = user[i]['username']
 
 
 
@@ -44,7 +56,7 @@ def Albums():
 
     return render_template('albums.html',
                            albums = album_content,
-                           username = usernames,
+                           username = getUsernames(getUserData()),
                            cover = thumbnails)
 
 @app.route("/posts")
@@ -58,7 +70,7 @@ def Posts():
 
     return render_template('posts.html',
                            posts = posts_content,
-                           username = usernames,
+                           username = getUsernames(getUserData()),
                            comment = comments_content)
 @app.route("/albums/photos/<username>")
 def photos(username):
@@ -68,10 +80,12 @@ def photos(username):
     return render_template('photos.html',
                            photo = photos_content,
                            user = username,
-                           index = find_key(usernames, username),
+                           index = find_key(getUsernames(getUserData()), username),
                            )
 
 def find_key(input_dict, value):
     for key, val in input_dict.items():
         if val == value: return key
     return "None"
+
+
