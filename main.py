@@ -2,49 +2,35 @@ import requests
 from flask import Flask, render_template, request
 import json
 
-def getUserData():
-    return requests.get("https://jsonplaceholder.typicode.com/users")
-
-
-def getUsernames(user_data):
+#function that fetches the userdata
+#then fills the usernames dictionary
+#with all the fetched unique usernames
+#then returns the filled dictionary
+def getUsernames():
+    user_data = requests.get("https://jsonplaceholder.typicode.com/users")
     users = json.loads(user_data.content)
     usernames = {}
 
-    #filling the usernames dict
     for i in range(10):
         usernames[users[i]['id']] = users[i]['username']
 
     return usernames
 
 
-res = requests.get("https://jsonplaceholder.typicode.com/photos/")
-photos = json.loads(res.content)
+#function that fetches the photo data
+#then fills the thumbnails dictionary
+#with all the unique thumbnail urls
+#then returns the filled dictionary
+def getThumbnails():
+    photo_data = requests.get("https://jsonplaceholder.typicode.com/photos/")
+    photos = json.loads(photo_data.content)
+    thumbnails = {}
+    for i in range(0, len(photos), 50):
+        thumbnails[photos[i]['albumId']] = photos[i]['thumbnailUrl']
 
-
-
-#album thumbnails dictionary
-#where keys are albumIDs
-#and values are thumbnail URLs
-thumbnails = {}
-
-for i in range(0,len(photos), 50):
-    thumbnails[photos[i]['albumId']] = photos[i]['thumbnailUrl']
-
-
-#usernames dictionary
-#where keys are userIDs
-#values are usernames
-
-#usernames = {}
-
-#filling the usernames dict
-#for i in range(10):
-    #usernames[user[i]['id']] = user[i]['username']
-
-
+    return thumbnails
 
 app = Flask(__name__)
-
 
 @app.route("/")
 def hello_world():
@@ -57,8 +43,8 @@ def Albums():
 
     return render_template('albums.html',
                            albums = album_content,
-                           username = getUsernames(getUserData()),
-                           cover = thumbnails)
+                           username = getUsernames(),
+                           cover = getThumbnails())
 
 @app.route("/posts")
 def Posts():
@@ -71,7 +57,7 @@ def Posts():
 
     return render_template('posts.html',
                            posts = posts_content,
-                           username = getUsernames(getUserData()),
+                           username = getUsernames(),
                            comment = comments_content)
 @app.route("/albums/photos/<username>")
 def photos(username):
@@ -81,7 +67,7 @@ def photos(username):
     return render_template('photos.html',
                            photo = photos_content,
                            user = username,
-                           index = find_key(getUsernames(getUserData()), username),
+                           index = find_key(getUsernames(), username),
                            )
 
 def find_key(input_dict, value):
