@@ -1,11 +1,13 @@
 import requests
 from flask import Flask, render_template, request
 import json
+from src.app import create_app
 
-#function that fetches the userdata
-#then fills the usernames dictionary
-#with all the fetched unique usernames
-#then returns the filled dictionary
+app = create_app()
+
+#function that fetches the userdata then fills
+#the dictionary with all the fetched unique usernames
+
 def getUsernames():
     user_data = requests.get("https://jsonplaceholder.typicode.com/users")
     users = json.loads(user_data.content)
@@ -30,7 +32,7 @@ def getThumbnails():
 
     return thumbnails
 
-app = Flask(__name__)
+
 
 @app.route("/")
 def hello_world():
@@ -42,9 +44,9 @@ def Albums():
 
 
     return render_template('albums.html',
-                           albums = album_content,
-                           username = getUsernames(),
-                           cover = getThumbnails())
+                    albums = album_content,
+                    username = getUsernames(),
+                    cover = getThumbnails())
 
 @app.route("/posts")
 def Posts():
@@ -56,23 +58,22 @@ def Posts():
 
 
     return render_template('posts.html',
-                           posts = posts_content,
-                           username = getUsernames(),
-                           comment = comments_content)
+            posts = posts_content,
+            username = getUsernames(),
+            comment = comments_content)
 @app.route("/albums/photos/<username>")
 def photos(username):
     response = requests.get("https://jsonplaceholder.typicode.com/photos")
     photos_content = json.loads(response.content)
 
     return render_template('photos.html',
-                           photo = photos_content,
-                           user = username,
-                           index = find_key(getUsernames(), username),
-                           )
+                photo = photos_content,
+                user = username,
+                index = find_key(getUsernames(), username),
+                        )
 
 def find_key(input_dict, value):
     for key, val in input_dict.items():
         if val == value: return key
     return "None"
-
 

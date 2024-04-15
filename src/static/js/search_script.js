@@ -33,7 +33,7 @@ document.getElementById('searchInputFinish').addEventListener('input', function 
     enforceMinMax(event);
     const searchEnd = event.target.value;
     const searchBeg = (document.getElementById("searchInputStart").value === "") ?
-        1: document.getElementById("searchInputStart");
+        1: document.getElementById("searchInputStart").value;
     const table = document.querySelectorAll("table");
 
 
