@@ -8,15 +8,18 @@
 <body>
 {% set users = username -%}
 {% set comments = comment -%}
-<h1><a href = "{{url_for ('hello_world')}}">API JSON</a></h1>
+<h1><a href = "{{url_for ('hello_world')}}" class="home_link">API JSON</a></h1>
 
 <h2>Filtrowanie postów po liczbie znaków</h2>
 
-<input type='number' min='1' max='200'>   <!-- dolna granica zakresu -->
-<input type='number' min='1' max='200'>   <!-- górna granica zakresu -->
+<input type='number' min='1' max='200' id="searchInputStart" placeholder="Od">   <!-- dolna granica zakresu -->
+
+<input type='number' min='1' max='200' id="searchInputFinish" placeholder="Do"
+       onfocus="this.value = 200">   <!-- górna granica zakresu -->
+
 
 {% for post in posts %}
-<table>
+<table id = "table">
   <tbody>
   <tr>
     <th>username</th>
@@ -28,7 +31,7 @@
   </tr>
   <tr>
     <th></th>
-    <td>{{post['body']}}</td>
+    <td class = "post_body">{{post['body']}}</td>
   </tr>
 
   <tr class="comment">
@@ -45,6 +48,7 @@
   </tbody>
 </table>
 {% endfor %}
-
+<p id = "message" style="visibility: hidden"> TemporaryMessage </p>
+<script src="{{ url_for('static', filename='js/search_script.js') }}"></script>
 </body>
 </html>

@@ -1,34 +1,37 @@
 import requests
 from flask import Flask, render_template, request
 import json
+from src.app import create_app
 
-users = requests.get("https://jsonplaceholder.typicode.com/users")
-user = json.loads(users.content)
+app = create_app()
 
-res = requests.get("https://jsonplaceholder.typicode.com/photos/")
-photos = json.loads(res.content)
+#function that fetches the userdata then fills
+#the dictionary with all the fetched unique usernames
 
-#album thumbnails dictionary
-#where keys are albumIDs
-#and values are thumbnail URLs
-thumbnails = {}
+def getUsernames():
+    user_data = requests.get("https://jsonplaceholder.typicode.com/users")
+    users = json.loads(user_data.content)
+    usernames = {}
 
-for i in range(0,len(photos), 50):
-    thumbnails[photos[i]['albumId']] = photos[i]['thumbnailUrl']
+    for i in range(10):
+        usernames[users[i]['id']] = users[i]['username']
 
-
-#usernames dictionary
-#where keys are userIDs
-#values are usernames
-usernames = {}
-
-#filling the usernames dict
-for i in range(10):
-    usernames[user[i]['id']] = user[i]['username']
+    return usernames
 
 
+#function that fetches the photo data
+#then fills the thumbnails dictionary
+#with all the unique thumbnail urls
+#then returns the filled dictionary
+def getThumbnails():
+    photo_data = requests.get("https://jsonplaceholder.typicode.com/photos/")
+    photos = json.loads(photo_data.content)
+    thumbnails = {}
+    for i in range(0, len(photos), 50):
+        thumbnails[photos[i]['albumId']] = photos[i]['thumbnailUrl']
 
-app = Flask(__name__)
+    return thumbnails
+
 
 
 @app.route("/")
@@ -41,9 +44,9 @@ def Albums():
 
 
     return render_template('albums.html',
-                           albums = album_content,
-                           username = usernames,
-                           cover = thumbnails)
+                    albums = album_content,
+                    username = getUsernames(),
+                    cover = getThumbnails())
 
 @app.route("/posts")
 def Posts():
@@ -55,16 +58,22 @@ def Posts():
 
 
     return render_template('posts.html',
-                           posts = posts_content,
-                           username = usernames,
-                           comment = comments_content)
+            posts = posts_content,
+            username = getUsernames(),
+            comment = comments_content)
 @app.route("/albums/photos/<username>")
 def photos(username):
     response = requests.get("https://jsonplaceholder.typicode.com/photos")
     photos_content = json.loads(response.content)
 
-
-
     return render_template('photos.html',
-                           user = username,
-                           )
+                photo = photos_content,
+                user = username,
+                index = find_key(getUsernames(), username),
+                        )
+
+def find_key(input_dict, value):
+    for key, val in input_dict.items():
+        if val == value: return key
+    return "None"
+

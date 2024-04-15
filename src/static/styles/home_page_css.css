@@ -73,7 +73,15 @@ th{
     width:20%;
 }
 td{
-    padding: 2%;
+    padding: 3%;
+}
+
+.comments{
+    font-size: 90%;
+}
+
+.comment{
+    border: 3px dashed #f0f0f0;
 }
 
 .home_page{
@@ -109,10 +117,12 @@ input[type=number]{
     font-size: 100%;
 }
 
-.comments{
-    font-size: 90%;
+.home_link{
+    line-height: 0;
+    background-color: #f7cb7e;
+    color: #090429;
+    font-size: 100%;
+    border: 0;
+    padding: 0;
 }
 
-.comment{
-    border: 3px dashed #f0f0f0;
-}
