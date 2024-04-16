@@ -3,12 +3,24 @@ import requests
 from flask import Flask, render_template, request
 import json
 from src.app import create_app
+import datetime
 
 # Setting up the Flask app
 app = create_app()
 
 # Setting up logging
-logging.basicConfig(filename='error.log', level=logging.ERROR)
+
+logger = logging.getLogger('main.py')
+
+logger.setLevel(logging.ERROR)
+
+formatter = logging.Formatter(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n%(process)d-%(levelname)s: %(message)s')
+
+file_handler = logging.FileHandler('basic.log', encoding='utf-8', mode='w')
+
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
 
 # Function that fetches user data and fills the dictionary with all the fetched unique usernames
 def getUsernames():
@@ -23,7 +35,7 @@ def getUsernames():
 
         return usernames
     except Exception as e:
-        logging.error(f"Error fetching user data: {str(e)}")
+        logger.error(f"Error fetching user data: {str(e)}")
         return {}
 
 # Function that fetches photo data and fills the thumbnails dictionary with all the unique thumbnail urls
@@ -38,7 +50,7 @@ def getThumbnails():
 
         return thumbnails
     except Exception as e:
-        logging.error(f"Error fetching photo data: {str(e)}")
+        logger.error(f"Error fetching photo data: {str(e)}")
         return {}
 
 # Route for the home page
@@ -59,7 +71,7 @@ def Albums():
                                username=getUsernames(),
                                cover=getThumbnails())
     except Exception as e:
-        logging.error(f"Error fetching albums data: {str(e)}")
+        logger.error(f"Error fetching albums data: {str(e)}")
         return render_template('error.html')
 
 # Route for fetching posts
@@ -79,7 +91,7 @@ def Posts():
                                username=getUsernames(),
                                comment=comments_content)
     except Exception as e:
-        logging.error(f"Error fetching posts data: {str(e)}")
+        logger.error(f"Error fetching posts data: {str(e)}")
         return render_template('error.html')
 
 # Route for fetching photos by username
@@ -95,7 +107,7 @@ def photos(username):
                                user=username,
                                index=find_key(getUsernames(), username))
     except Exception as e:
-        logging.error(f"Error fetching photos data: {str(e)}")
+        logger.error(f"Error fetching photos data: {str(e)}")
         return render_template('error.html')
 
 # Function to find a key in a dictionary based on its value
@@ -104,3 +116,4 @@ def find_key(input_dict, value):
         if val == value:
             return key
     return "None"
+
