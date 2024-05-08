@@ -9,13 +9,16 @@ on:
   pull_request:
     branches:
       - main
-
+      
+permissions:
+  checks: write
+  contents: write
+  
 jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
-    permissions: read-all
-
+    
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
