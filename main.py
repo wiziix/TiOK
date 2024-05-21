@@ -75,6 +75,15 @@ def load_more_albums():
         response.raise_for_status()  # Raise exception for non-200 status codes
         album_content = json.loads(response.content)
         new_albums = album_content[current_album_count:current_album_count + 10]
+        username = getUsernames()
+        thumbails = getThumbnails()
+        thumbailCount = current_album_count + 1
+
+        for album in new_albums:
+            album.update({"username" : username.get(album.get("userId"))})
+            album.update({"thumbnail" : thumbails.get(thumbailCount)})
+            thumbailCount += 1
+
         return jsonify(new_albums)
     except Exception as e:
         logger.error(f"Error fetching more albums data: {str(e)}")
@@ -120,5 +129,17 @@ def find_key(input_dict, value):
             return key
     return "None"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+def temp():
+        response = requests.get("https://jsonplaceholder.typicode.com/albums/")
+
+        album_content = json.loads(response.content)
+        thumbnails = getThumbnails()
+
+        print(thumbnails)
+
+        #album_content[0].update({"username" : username.get(1)})
+
+        print(album_content[0])
+
+temp()

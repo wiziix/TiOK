@@ -41,7 +41,6 @@
 <button id="load-more">Load More</button>
 
 <script>
-    console.log("elooo");
     $(document).ready(function() {
         let currentAlbumCount = {{ albums|length }};
 
@@ -57,7 +56,7 @@
                                 <tbody>
                                 <tr>
                                     <th>username</th>
-                                    <td>${users[album.userId]}</td>
+                                    <td>${album.username}</td>
                                 </tr>
                                 <tr>
                                     <th>title</th>
@@ -67,9 +66,9 @@
                                     <th>cover</th>
                                     <td>
                                         <p>
-                                            <img src="${cover[album.id]}">
+                                            <img src="${album.thumbnail}">
                                             <br>
-                                            <a class="photos" href="/albums/photos/${users[album.userId]}">open album</a>
+                                            <a class="photos" href="/albums/photos/${album.username}">open album</a>
                                         </p>
                                     </td>
                                 </tr>
