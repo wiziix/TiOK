@@ -133,3 +133,14 @@ input[type=number]{
     padding: 0;
 }
 
+button{
+    font-family: Century Gothic, sans-serif;
+    font-size: 100%;
+    background-color: #f7cb7e;
+    color: #090429;
+    appearance: none;
+    margin: 10% auto;
+    border: 4px dashed #FFFFFF;
+    padding: 1% 2%;
+    text-align: center;
+}

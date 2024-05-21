@@ -5,13 +5,14 @@
     <link rel="shortcut icon" href="{{url_for('static', filename='favicon.png')}}">
   <meta charset="UTF-8">
 	<script src="{{ url_for('static', filename='js/photos.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>Photos - {{user}}</title>
 </head>
 {% set ID = index -%}
 {% set photos = photo %}
 
 <body>
-<h1><a href = "{{url_for ('hello_world')}}" class="home_link">API JSON</a></h1>
+<h1><a href = "{{url_for ('hello_world')}}" class="home_link" style="text-decoration: none;">API JSON</a></h1>
     <div>
 		{% for i in range( (index - 1) * 50 , index * 50 ) %}
             <div class="container">
