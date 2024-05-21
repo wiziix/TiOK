@@ -41,6 +41,12 @@ div{
 
 }
 
+#albums-container{
+    border: none;
+    width: 100%;
+    padding: 0;
+}
+
 a{
     line-height: 500%;
     background-color: #FFFFFF;
@@ -136,11 +142,17 @@ input[type=number]{
 button{
     font-family: Century Gothic, sans-serif;
     font-size: 100%;
-    background-color: #f7cb7e;
+    border: 3px dashed #FFFFFF;
+    background-color: #e0e0e0;
     color: #090429;
     appearance: none;
     margin: 10% auto;
-    border: 4px dashed #FFFFFF;
     padding: 1% 2%;
     text-align: center;
+}
+
+button:hover{
+    background-color: #f7cb7e;
+    border: 4px dashed #FFFFFF;
+    cursor: pointer;
 }
