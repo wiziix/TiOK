@@ -1,6 +1,6 @@
 import logging
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import json
 from src.app import create_app
 import datetime
@@ -9,17 +9,11 @@ import datetime
 app = create_app()
 
 # Setting up logging
-
 logger = logging.getLogger('main.py')
-
 logger.setLevel(logging.ERROR)
-
 formatter = logging.Formatter(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n%(process)d-%(levelname)s: %(message)s')
-
 file_handler = logging.FileHandler('basic.log', encoding='utf-8', mode='w')
-
 file_handler.setFormatter(formatter)
-
 logger.addHandler(file_handler)
 
 # Function that fetches user data and fills the dictionary with all the fetched unique usernames
@@ -29,10 +23,8 @@ def getUsernames():
         user_data.raise_for_status()  # Raise exception for non-200 status codes
         users = json.loads(user_data.content)
         usernames = {}
-
         for i in range(10):
             usernames[users[i]['id']] = users[i]['username']
-
         return usernames
     except Exception as e:
         logger.error(f"Error fetching user data: {str(e)}")
@@ -47,7 +39,6 @@ def getThumbnails():
         thumbnails = {}
         for i in range(0, len(photos), 50):
             thumbnails[photos[i]['albumId']] = photos[i]['thumbnailUrl']
-
         return thumbnails
     except Exception as e:
         logger.error(f"Error fetching photo data: {str(e)}")
@@ -65,14 +56,29 @@ def Albums():
         response = requests.get("https://jsonplaceholder.typicode.com/albums/")
         response.raise_for_status()  # Raise exception for non-200 status codes
         album_content = json.loads(response.content)
+        initial_albums = album_content[:10]  # Load the first 10 albums initially
 
         return render_template('albums.html',
-                               albums=album_content,
+                               albums=initial_albums,
                                username=getUsernames(),
                                cover=getThumbnails())
     except Exception as e:
         logger.error(f"Error fetching albums data: {str(e)}")
         return render_template('error.html')
+
+# Route for fetching more albums
+@app.route("/load_more_albums", methods=['POST'])
+def load_more_albums():
+    try:
+        current_album_count = int(request.form.get('current_album_count'))
+        response = requests.get("https://jsonplaceholder.typicode.com/albums/")
+        response.raise_for_status()  # Raise exception for non-200 status codes
+        album_content = json.loads(response.content)
+        new_albums = album_content[current_album_count:current_album_count + 10]
+        return jsonify(new_albums)
+    except Exception as e:
+        logger.error(f"Error fetching more albums data: {str(e)}")
+        return jsonify([])
 
 # Route for fetching posts
 @app.route("/posts")
@@ -81,11 +87,9 @@ def Posts():
         response = requests.get("https://jsonplaceholder.typicode.com/posts")
         response.raise_for_status()  # Raise exception for non-200 status codes
         posts_content = json.loads(response.content)
-
         response = requests.get("https://jsonplaceholder.typicode.com/comments")
         response.raise_for_status()  # Raise exception for non-200 status codes
         comments_content = json.loads(response.content)
-
         return render_template('posts.html',
                                posts=posts_content,
                                username=getUsernames(),
@@ -101,7 +105,6 @@ def photos(username):
         response = requests.get("https://jsonplaceholder.typicode.com/photos")
         response.raise_for_status()  # Raise exception for non-200 status codes
         photos_content = json.loads(response.content)
-
         return render_template('photos.html',
                                photo=photos_content,
                                user=username,
@@ -117,3 +120,5 @@ def find_key(input_dict, value):
             return key
     return "None"
 
+if __name__ == '__main__':
+    app.run(debug=True)

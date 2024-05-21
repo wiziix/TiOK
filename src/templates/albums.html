@@ -2,39 +2,89 @@
 <html lang="en">
 <head>
     <link href="{{ url_for('static', filename='styles/home_page_css.css') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.png')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
     <meta charset="UTF-8">
     <title>Albums</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-{% set users = username -%}
-{% set image = cover -%}
-<h1><a href = "{{url_for ('hello_world')}}" class="home_link">API JSON</a></h1>
+{% set users = username %}
+{% set image = cover %}
+<h1><a href="{{ url_for('hello_world') }}" class="home_link">API JSON</a></h1>
 
-{% for album in albums %}
-<table>
-    <tbody>
-    <tr>
-        <th>username</th>
-        <td>{{users[album['userId']]}}</td>
-    </tr>
-    <tr>
-        <th>title</th>
-        <td>{{album['title']}}</td>
-    </tr>
-    <tr>
-        <th>cover</th>
-        <td>
-            <p>
-                <img src= {{cover[album['id']]}}>
-                <br>
-                <a class="photos" href="{{url_for ('photos', username = users[album['userId']])}}">open album</a>
-            </p>
-        </td>
-    </tr>
-    </tbody>
-</table>
-{% endfor %}
+<div id="albums-container">
+    {% for album in albums %}
+    <table>
+        <tbody>
+        <tr>
+            <th>username</th>
+            <td>{{ users[album['userId']] }}</td>
+        </tr>
+        <tr>
+            <th>title</th>
+            <td>{{ album['title'] }}</td>
+        </tr>
+        <tr>
+            <th>cover</th>
+            <td>
+                <p>
+                    <img src="{{ cover[album['id']] }}">
+                    <br>
+                    <a class="photos" href="{{ url_for('photos', username=users[album['userId']]) }}">open album</a>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+</div>
+<button id="load-more">Load More</button>
 
+<script>
+    console.log("elooo");
+    $(document).ready(function() {
+        let currentAlbumCount = {{ albums|length }};
+
+        $('#load-more').click(function() {
+            $.ajax({
+                url: '/load_more_albums',
+                method: 'POST',
+                data: { current_album_count: currentAlbumCount },
+                success: function(newAlbums) {
+                    newAlbums.forEach(album => {
+                        $('#albums-container').append(`
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th>username</th>
+                                    <td>${users[album.userId]}</td>
+                                </tr>
+                                <tr>
+                                    <th>title</th>
+                                    <td>${album.title}</td>
+                                </tr>
+                                <tr>
+                                    <th>cover</th>
+                                    <td>
+                                        <p>
+                                            <img src="${cover[album.id]}">
+                                            <br>
+                                            <a class="photos" href="/albums/photos/${users[album.userId]}">open album</a>
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        `);
+                    });
+                    currentAlbumCount += newAlbums.length;
+                },
+                error: function() {
+                    alert('An error occurred while loading more albums.');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
