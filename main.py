@@ -128,18 +128,3 @@ def find_key(input_dict, value):
         if val == value:
             return key
     return "None"
-
-
-def temp():
-        response = requests.get("https://jsonplaceholder.typicode.com/albums/")
-
-        album_content = json.loads(response.content)
-        thumbnails = getThumbnails()
-
-        print(thumbnails)
-
-        #album_content[0].update({"username" : username.get(1)})
-
-        print(album_content[0])
-
-temp()
